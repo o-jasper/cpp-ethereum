@@ -132,7 +132,7 @@ string credits()
 	if (pocnumber == 4)
 		m_servers = "54.72.31.55";
 	else
-		m_servers = "54.201.28.117";
+		m_servers = "46.226.111.217";
 
 	ccout << "Type 'netstart 30303' to start networking" << endl;
 	ccout << "Type 'connect " << m_servers << " 30303' to connect" << endl;

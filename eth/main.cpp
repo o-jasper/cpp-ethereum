@@ -123,8 +123,8 @@ string credits(bool _interactive = false)
 		string m_servers;
 		if (pocnumber == 3)
 			m_servers = "54.201.28.117";
-		if (pocnumber == 4)
-			m_servers = "54.72.31.55";
+		else
+			m_servers = "46.226.111.217";
 
 		cout << "Type 'netstart 30303' to start networking" << endl;
 		cout << "Type 'connect " << m_servers << " 30303' to connect" << endl;
