@@ -120,7 +120,7 @@ string credits(bool _interactive = false)
 		string vs = toString(ETH_QUOTED(ETH_VERSION));
 		vs = vs.substr(vs.find_first_of('.') + 1)[0];
 		string m_servers;
-		m_servers = "173.246.105.20";
+		m_servers = "173.246.105.207";
 
 		cout << "Type 'netstart 30303' to start networking" << endl;
 		cout << "Type 'connect " << m_servers << " 30303' to connect" << endl;

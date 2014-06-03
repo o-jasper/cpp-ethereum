@@ -184,7 +184,7 @@ Main::Main(QWidget *parent) :
 #if ETH_DEBUG
 	m_servers.append("192.168.0.10:30301");
 #else
-	m_servers.push_back("173.246.105.20:30303");
+	m_servers.push_back("173.246.105.207:30303");
 
 #endif
 
