@@ -184,22 +184,8 @@ Main::Main(QWidget *parent) :
 #if ETH_DEBUG
 	m_servers.append("192.168.0.10:30301");
 #else
-	int pocnumber = QString(ETH_QUOTED(ETH_VERSION)).section('.', 1, 1).toInt();
-	if (pocnumber == 4)
-		m_servers.push_back("54.72.31.55:30303");
-	else if (pocnumber == 5)
-		m_servers.push_back("173.246.105.20:30303");
-	else
-	{
-		connect(&m_webCtrl, &QNetworkAccessManager::finished, [&](QNetworkReply* _r)
-		{
-			m_servers = QString::fromUtf8(_r->readAll()).split("\n", QString::SkipEmptyParts);
-		});
-		QNetworkRequest r(QUrl("http://www.ethereum.org/servers.poc" + QString::number(pocnumber) + ".txt"));
-		r.setHeader(QNetworkRequest::UserAgentHeader, "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1712.0 Safari/537.36");
-		m_webCtrl.get(r);
-		srand(time(0));
-	}
+	m_servers.push_back("173.246.105.20:30303");
+
 #endif
 
 	cerr << "State root: " << BlockChain::genesis().stateRoot << endl << "Block Hash: " << sha3(BlockChain::createGenesisBlock()) << endl << "Block RLP: " << RLP(BlockChain::createGenesisBlock()) << endl << "Block Hex: " << toHex(BlockChain::createGenesisBlock()) << endl;
@@ -241,7 +227,7 @@ Main::Main(QWidget *parent) :
 	refresh();
 
 	{
-		QSettings s("ethereum", "alethzero");
+		QSettings s("ethereum", "projectdouglas");
 		if (s.value("splashMessage", true).toBool())
 		{
 			QMessageBox::information(this, "Here Be Dragons!", "This is proof-of-concept software. The project as a whole is not even at the alpha-testing stage. It here to show you, if you have a technical bent, the sort of thing that might be possible down the line.\nPlease don't blame us if it does something unexpected or if you're underwhelmed with the user-experience. We have great plans for it in terms of UX down the line but right now we just want to get the groundwork sorted. We welcome contributions, be they in code, testing or documentation!\nAfter you close this message it won't appear again.");
@@ -392,7 +378,7 @@ void Main::on_paranoia_triggered()
 
 void Main::writeSettings()
 {
-	QSettings s("ethereum", "alethzero");
+	QSettings s("ethereum", "projectdouglas");
 	QByteArray b;
 	b.resize(sizeof(Secret) * m_myKeys.size());
 	auto p = b.data();
@@ -427,7 +413,7 @@ void Main::writeSettings()
 
 void Main::readSettings()
 {
-	QSettings s("ethereum", "alethzero");
+	QSettings s("ethereum", "projectdouglas");
 
 	restoreGeometry(s.value("geometry").toByteArray());
 	restoreState(s.value("windowState").toByteArray());
