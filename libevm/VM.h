@@ -314,6 +314,8 @@ template <class Ext> eth::bytesConstRef eth::VM::go(Ext& _ext, uint64_t _steps)
 		}
 		case Instruction::ECRECOVER:
 		{
+			// msghash, r, s should be at top of stack
+			// puts recoverd pubkey on stack, or 0 if recover fails
 			require(3);
 			h256 msgHash = m_stack.back();
 			m_stack.pop_back();
@@ -326,11 +328,13 @@ template <class Ext> eth::bytesConstRef eth::VM::go(Ext& _ext, uint64_t _steps)
 			byte pubkey[65];
 			h160 address;	
 			int pubkeyLength = 65;
-			int ret;
-			ret = secp256k1_ecdsa_recover_compact(msgHash.data(), 32, sig[0].data(), pubkey, &pubkeyLength, 0, (byte)1);
-			address = right160(eth::sha3(bytesConstRef(&(pubkey[1]), 64)));
-			m_stack.push_back(fromAddress(address));
+			if (secp256k1_ecdsa_recover_compact(msgHash.data(), 32, sig[0].data(), pubkey, &pubkeyLength, 0, (byte)1)){
 
+				address = right160(eth::sha3(bytesConstRef(&(pubkey[1]), 64)));
+				m_stack.push_back(fromAddress(address));
+			}
+			else
+				m_stack.push_back((u256)0);
 			break;
 		}
 		case Instruction::ADDRESS:
