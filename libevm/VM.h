@@ -146,11 +146,6 @@ template <class Ext> eth::bytesConstRef eth::VM::go(Ext& _ext, uint64_t _steps)
 			runGas = c_sha3Gas;
 			newTempSize = (unsigned)m_stack.back() + (unsigned)m_stack[m_stack.size() - 2];
 			break;
-		case Instruction::ECRECOVER:
-			require(3);
-			runGas = c_ecrecoverGas;
-			newTempSize = (unsigned)m_stack.back() + (unsigned)m_stack[m_stack.size() - 3];
-			break;
 		case Instruction::CALLDATACOPY:
 			require(3);
 			newTempSize = (unsigned)m_stack.back() + (unsigned)m_stack[m_stack.size() - 3];
@@ -183,6 +178,7 @@ template <class Ext> eth::bytesConstRef eth::VM::go(Ext& _ext, uint64_t _steps)
 		default:
 			break;
 		}
+
 
 		newTempSize = (newTempSize + 31) / 32 * 32;
 		if (newTempSize > m_temp.size())
@@ -317,19 +313,18 @@ template <class Ext> eth::bytesConstRef eth::VM::go(Ext& _ext, uint64_t _steps)
 			// msghash, r, s should be at top of stack
 			// puts recoverd pubkey on stack, or 0 if recover fails
 			require(3);
-			h256 msgHash = m_stack.back();
+			h256 msgHash = (h256) m_stack.back();
 			m_stack.pop_back();
 			h256 sig[2];
-			sig[0] = m_stack.back();
+			sig[0] = (h256) m_stack.back();
 			m_stack.pop_back();
-			sig[1] = m_stack.back();
+			sig[1] = (h256) m_stack.back();
 			m_stack.pop_back();
 
 			byte pubkey[65];
 			h160 address;	
 			int pubkeyLength = 65;
 			if (secp256k1_ecdsa_recover_compact(msgHash.data(), 32, sig[0].data(), pubkey, &pubkeyLength, 0, (byte)1)){
-
 				address = right160(eth::sha3(bytesConstRef(&(pubkey[1]), 64)));
 				m_stack.push_back(fromAddress(address));
 			}
