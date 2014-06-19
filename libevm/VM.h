@@ -22,6 +22,7 @@
 #pragma once
 
 #include <unordered_map>
+#include <secp256k1/secp256k1.h>
 #include <libethsupport/Exceptions.h>
 #include <libethcore/CommonEth.h>
 #include <libethcore/Instruction.h>
@@ -178,6 +179,7 @@ template <class Ext> eth::bytesConstRef eth::VM::go(Ext& _ext, uint64_t _steps)
 			break;
 		}
 
+
 		newTempSize = (newTempSize + 31) / 32 * 32;
 		if (newTempSize > m_temp.size())
 			runGas += c_memoryGas * (newTempSize - m_temp.size()) / 32;
@@ -304,6 +306,30 @@ template <class Ext> eth::bytesConstRef eth::VM::go(Ext& _ext, uint64_t _steps)
 			unsigned inSize = (unsigned)m_stack.back();
 			m_stack.pop_back();
 			m_stack.push_back(sha3(bytesConstRef(m_temp.data() + inOff, inSize)));
+			break;
+		}
+		case Instruction::ECRECOVER:
+		{
+			// msghash, r, s should be at top of stack
+			// puts recoverd pubkey on stack, or 0 if recover fails
+			require(3);
+			h256 msgHash = (h256) m_stack.back();
+			m_stack.pop_back();
+			h256 sig[2];
+			sig[0] = (h256) m_stack.back();
+			m_stack.pop_back();
+			sig[1] = (h256) m_stack.back();
+			m_stack.pop_back();
+
+			byte pubkey[65];
+			h160 address;	
+			int pubkeyLength = 65;
+			if (secp256k1_ecdsa_recover_compact(msgHash.data(), 32, sig[0].data(), pubkey, &pubkeyLength, 0, (byte)1)){
+				address = right160(eth::sha3(bytesConstRef(&(pubkey[1]), 64)));
+				m_stack.push_back(fromAddress(address));
+			}
+			else
+				m_stack.push_back((u256)0);
 			break;
 		}
 		case Instruction::ADDRESS:

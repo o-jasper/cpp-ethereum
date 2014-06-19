@@ -58,6 +58,7 @@ enum class Instruction: uint8_t
 	BYTE,
 
 	SHA3 = 0x20,
+	ECRECOVER,
 
 	ADDRESS = 0x30,
 	BALANCE,
