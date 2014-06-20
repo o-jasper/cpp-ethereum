@@ -186,9 +186,9 @@ Main::Main(QWidget *parent) :
 #else
     int pocnumber = QString(eth::EthVersion).section('.', 1, 1).toInt();
 	if (pocnumber == 4)
-		m_servers.push_back("54.72.31.55:30303");
+		m_servers.push_back("173.246.105.207:30303");
 	else if (pocnumber == 5)
-        m_servers.push_back("54.72.69.180:30303");
+        m_servers.push_back("173.246.105.207:30303");
 	else
 	{
 		connect(&m_webCtrl, &QNetworkAccessManager::finished, [&](QNetworkReply* _r)
@@ -244,7 +244,7 @@ Main::Main(QWidget *parent) :
 	refresh();
 
 	{
-		QSettings s("ethereum", "alethzero");
+		QSettings s("ethereum", "projectdouglas");
 		if (s.value("splashMessage", true).toBool())
 		{
 			QMessageBox::information(this, "Here Be Dragons!", "This is proof-of-concept software. The project as a whole is not even at the alpha-testing stage. It is here to show you, if you have a technical bent, the sort of thing that might be possible down the line.\nPlease don't blame us if it does something unexpected or if you're underwhelmed with the user-experience. We have great plans for it in terms of UX down the line but right now we just want to get the groundwork sorted. We welcome contributions, be they in code, testing or documentation!\nAfter you close this message it won't appear again.");
@@ -402,7 +402,7 @@ void Main::on_paranoia_triggered()
 
 void Main::writeSettings()
 {
-	QSettings s("ethereum", "alethzero");
+	QSettings s("ethereum", "projectdouglas");
 	QByteArray b;
 	b.resize(sizeof(Secret) * m_myKeys.size());
 	auto p = b.data();
@@ -437,7 +437,7 @@ void Main::writeSettings()
 
 void Main::readSettings()
 {
-	QSettings s("ethereum", "alethzero");
+	QSettings s("ethereum", "projectdouglas");
 
 	restoreGeometry(s.value("geometry").toByteArray());
 	restoreState(s.value("windowState").toByteArray());
@@ -467,7 +467,7 @@ void Main::readSettings()
 	ui->idealPeers->setValue(s.value("idealPeers", ui->idealPeers->value()).toInt());
 	ui->port->setValue(s.value("port", ui->port->value()).toInt());
 	ui->nameReg->setText(s.value("NameReg", "").toString());
-	ui->urlEdit->setText(s.value("url", "http://gavwood.com/gavcoin.html").toString());
+	ui->urlEdit->setText(s.value("url", "http://listen.epm.io").toString());
 	on_urlEdit_returnPressed();
 }
 

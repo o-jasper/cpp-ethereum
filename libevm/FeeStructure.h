@@ -26,9 +26,10 @@
 namespace eth
 {
 
-extern u256 const c_stepGas;			///< Once per operation, except for SSTORE, SLOAD, BALANCE, SHA3, CREATE, CALL.
+extern u256 const c_stepGas;			///< Once per operation, except for SSTORE, SLOAD, BALANCE, SHA3, ECRECOVER, CREATE, CALL.
 extern u256 const c_balanceGas;			///< Once per BALANCE operation.
 extern u256 const c_sha3Gas;			///< Once per SHA3 operation.
+extern u256 const c_ecrecoverGas;		///< Once per ECRECOVER operation.
 extern u256 const c_sloadGas;			///< Once per SLOAD operation.
 extern u256 const c_sstoreGas;			///< Once per non-zero storage element in a CREATE call/transaction. Also, once/twice per SSTORE operation depending on whether the zeroness changes (twice iff it changes from zero; nothing at all if to zero) or doesn't (once).
 extern u256 const c_createGas;			///< Once per CREATE operation & contract-creation transaction.

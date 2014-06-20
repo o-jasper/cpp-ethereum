@@ -126,9 +126,9 @@ string credits(bool _interactive = false)
 		int pocnumber = stoi(vs);
 		string m_servers;
 		if (pocnumber == 4)
-			m_servers = "54.72.31.55";
+			m_servers = "173.246.105.207";
 		else
-			m_servers = "54.72.69.180";
+			m_servers = "173.246.105.207";
 
 		cout << "Type 'netstart 30303' to start networking" << endl;
 		cout << "Type 'connect " << m_servers << " 30303' to connect" << endl;

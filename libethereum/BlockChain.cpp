@@ -72,14 +72,14 @@ std::map<Address, AddressState> const& eth::genesisState()
 	if (s_ret.empty())
 		// Initialise.
 		for (auto i: vector<string>({
-            "51ba59315b3a95761d0863b05ccc7a7f54703d99",
-			"e6716f9544a56c530d868e4bfbacb172315bdead",
-			"1e12515ce3e0f817a4ddef9ca55788a1d66bd2df",
-			"1a26338f0d905e295fccb71fa9ea849ffa12aaf4",
-			"2ef47100e0787b915105fd5e3f4ff6752079d5cb",
-			"cd2a3d9f938e13cd947ec05abc7fe734df8dd826",
-			"6c386a4b26f73c802f34673f7248bb118f97424a",
-			"e4157b34ea9615cfbde6b4fda419828124b70c78"
+			"a6cb63ec28c12929bee2d3567bf98f374a0b7167",
+			"38155ef3698a43b24b054d816a8a5f79fc148623",
+			"1ba90cc26cdb5814d691e0fed53d8cda6e89e51b",
+			"1b127e588c21b1257f4f33e926d581e897a57c4c",
+			"d6e96ee6661367735c15894193bdca276bae27ba",
+			"79e11e66c3ae33f0d26bb83cdaac9b092236a580",
+			"2388c6da82691189bd518f506068f3d19a767de6",
+			"38155ef3698a43b24b054d816a8a5f79fc148623"
 		}))
 			s_ret[Address(fromHex(i))] = AddressState(0, u256(1) << 200, h256(), EmptySHA3);
 	return s_ret;
