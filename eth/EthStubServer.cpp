@@ -151,10 +151,10 @@ Json::Value EthStubServer::transact(const std::string& _aDest, const std::string
 
 Json::Value EthStubServer::sim_call(const std::string& _aRecv, const std::string& _senderAddress, const std::string& _xValue, const std::string& _xGasPrice, const std::string& _bData, const std::string& _xGas, const std::string& _originAddress)
 {
-  ClientGuard g(&m_client);
-  u256 gas = jsToU256(_xGas);
-  bytesRef out;
-	m_client.sim_call(jsToAddress(_aRecv), jsToAddress(_senderAddress),  jsToU256(_xValue), jsToU256(_xGasPrice), eth::ref(jsToBytes(_bData)), &gas, out, jsToAddress(_originAddress));
+	ClientGuard g(&m_client);
+	u256 gas = jsToU256(_xGas);
+	bytesRef out;
+	m_client.sim_call(jsToAddress(_aRecv), jsToAddress(_senderAddress), jsToU256(_xValue), jsToU256(_xGasPrice), eth::ref(jsToBytes(_bData)), &gas, out, jsToAddress(_originAddress));
 	return Json::Value(); //toJS(out); //TODO might not be right, put in gas as info too.
 }
 

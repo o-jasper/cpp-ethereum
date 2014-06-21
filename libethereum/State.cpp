@@ -1002,13 +1002,15 @@ bool State::call(Address _receiveAddress, Address _senderAddress, u256 _value, u
 		// Write state out only in the case of a non-excepted transaction.
 		if (revert || simulate)
 			evm.revert();
-    if ( simulate )
-      subBalance(_receiveAddress, _value);
+		if ( simulate )
+			subBalance(_receiveAddress, _value);
 
 		*_gas = vm.gas();
 
 		return !revert;
 	}
+	if ( simulate )
+		subBalance(_receiveAddress, _value);
 	return true;
 }
 
