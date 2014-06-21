@@ -359,7 +359,7 @@ void State::resetCurrent()
 	m_currentBlock.timestamp = time(0);
 	m_currentBlock.transactionsRoot = h256();
 	m_currentBlock.sha3Uncles = h256();
-	m_currentBlock.minGasPrice = 10 * szabo;
+	m_currentBlock.minGasPrice = 0;
 	m_currentBlock.populateFromParent(m_previousBlock);
 
 	// Update timestamp according to clock.
