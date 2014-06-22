@@ -29,6 +29,7 @@ var spec = [
             { "method": "isContractAt", "params": { "a": "" }, "order": ["a"], "returns" : false },
             { "method": "create", "params": { "sec": "", "xEndowment": "", "bCode": "", "xGas": "", "xGasPrice": "" }, "order": ["sec", "xEndowment", "bCode", "xGas", "xGasPrice"] , "returns": "" },
             { "method": "transact", "params": { "sec": "", "xValue": "", "aDest": "", "bData": "", "xGas": "", "xGasPrice": "" }, "order": ["sec", "xValue", "aDest", "bData", "xGas", "xGasPrice"], "returns": {} },
+            { "method": "sim_call", "params": {"aDest": "", "aSend":"", "xValue": "", "xGasPrice": "", "bData": "", "xGas":"", "aOrigin":""}, "order": ["aDest", "aSend", "xValue", "xGasPrice", "bData", "xGas", "aOrigin"], "returns": "" },
             { "method": "secretToAddress", "params": { "a": "" }, "order": ["a"], "returns" : "" },
             { "method": "lll", "params": { "s": "" }, "order": ["s"], "returns" : "" }
 ];
