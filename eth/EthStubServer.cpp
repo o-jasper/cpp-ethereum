@@ -50,7 +50,7 @@ Json::Value EthStubServer::procedures()
 		for (auto params: proc.second->GetParameters())
 			params_j[params.first] = jsontypeToValue(params.second);
 		proc_j["params"] = params_j;
-		
+    
 		proc_j["returns"] = jsontypeToValue(proc.second->GetReturnType());
 
 		ret.append(proc_j);
@@ -147,6 +147,15 @@ Json::Value EthStubServer::transact(const std::string& _aDest, const std::string
 	ClientGuard g(&m_client);
 	m_client.transact(jsToSecret(_sec), jsToU256(_xValue), jsToAddress(_aDest), jsToBytes(_bData), jsToU256(_xGas), jsToU256(_xGasPrice));
 	return Json::Value();
+}
+
+std::string EthStubServer::sim_call(const std::string& _aRecv, const std::string& _aSender, const std::string& _xValue, const std::string& _xGasPrice, const std::string& _bData, const std::string& _xGas, const std::string& _aOrigin)
+{
+	ClientGuard g(&m_client);
+	u256 gas = jsToU256(_xGas);
+	bytesRef out;
+	m_client.sim_call(jsToAddress(_aRecv), jsToAddress(_aSender), jsToU256(_xValue), jsToU256(_xGasPrice), eth::ref(jsToBytes(_bData)), &gas, out, jsToAddress(_aOrigin));
+  return toHex(out);
 }
 
 std::string EthStubServer::txCountAt(const std::string& _a)

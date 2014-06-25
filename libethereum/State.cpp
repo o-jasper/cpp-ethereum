@@ -962,7 +962,7 @@ u256 State::execute(bytesConstRef _rlp)
 	return e.gasUsed();
 }
 
-bool State::call(Address _receiveAddress, Address _senderAddress, u256 _value, u256 _gasPrice, bytesConstRef _data, u256* _gas, bytesRef _out, Address _originAddress)
+bool State::call(Address _receiveAddress, Address _senderAddress, u256 _value, u256 _gasPrice, bytesConstRef _data, u256* _gas, bytesRef _out, Address _originAddress, bool simulate)
 {
 	if (!_originAddress)
 		_originAddress = _senderAddress;
@@ -1000,13 +1000,17 @@ bool State::call(Address _receiveAddress, Address _senderAddress, u256 _value, u
 		}
 
 		// Write state out only in the case of a non-excepted transaction.
-		if (revert)
+		if (revert || simulate)
 			evm.revert();
+		if ( simulate )
+			subBalance(_receiveAddress, _value);
 
 		*_gas = vm.gas();
 
 		return !revert;
 	}
+	if ( simulate )
+		subBalance(_receiveAddress, _value);
 	return true;
 }
 
