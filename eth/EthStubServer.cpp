@@ -153,7 +153,9 @@ std::string EthStubServer::simCall(const std::string& _aRecv, const std::string&
 {
 	ClientGuard g(&m_client);
 	u256 gas = jsToU256(_xGas);
-	bytesRef out;
+  byte array[1024];
+  for( int i=0 ; i<1024 ; i++ ){ array[i] = 0; }
+  bytesRef out(array, 1024);
 	m_client.sim_call(jsToAddress(_aRecv), jsToAddress(_aSender), jsToU256(_xValue), jsToU256(_xGasPrice), eth::ref(jsToBytes(_bData)), &gas, out, jsToAddress(_aOrigin));
   return toHex(out);
 }
