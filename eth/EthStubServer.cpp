@@ -149,7 +149,7 @@ Json::Value EthStubServer::transact(const std::string& _aDest, const std::string
 	return Json::Value();
 }
 
-std::string EthStubServer::sim_call(const std::string& _aRecv, const std::string& _aSender, const std::string& _xValue, const std::string& _xGasPrice, const std::string& _bData, const std::string& _xGas, const std::string& _aOrigin)
+std::string EthStubServer::simCall(const std::string& _aRecv, const std::string& _aSender, const std::string& _xValue, const std::string& _xGasPrice, const std::string& _bData, const std::string& _xGas, const std::string& _aOrigin)
 {
 	ClientGuard g(&m_client);
 	u256 gas = jsToU256(_xGas);

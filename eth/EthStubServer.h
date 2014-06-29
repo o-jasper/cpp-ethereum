@@ -50,7 +50,7 @@ public:
 	virtual int peerCount();
 	virtual std::string storageAt(const std::string& a, const std::string& x);
 	virtual Json::Value transact(const std::string& aDest, const std::string& bData, const std::string& sec, const std::string& xGas, const std::string& xGasPrice, const std::string& xValue);
-	virtual std::string sim_call(const std::string& _aDest, const std::string& _aSend, const std::string& _xValue, const std::string& _xGasPrice, const std::string& _bData, const std::string& _xGas, const std::string& _aOrigin);
+	virtual std::string simCall(const std::string& _aDest, const std::string& _aSend, const std::string& _xValue, const std::string& _xGasPrice, const std::string& _bData, const std::string& _xGas, const std::string& _aOrigin);
 
 	virtual std::string txCountAt(const std::string& a);
 	virtual std::string secretToAddress(const std::string& a);

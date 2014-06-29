@@ -29,7 +29,7 @@ class AbstractEthStubServer : public jsonrpc::AbstractServer<AbstractEthStubServ
             this->bindAndAddMethod(new jsonrpc::Procedure("peerCount", jsonrpc::PARAMS_BY_NAME, jsonrpc::JSON_INTEGER,  NULL), &AbstractEthStubServer::peerCountI);
             this->bindAndAddMethod(new jsonrpc::Procedure("procedures", jsonrpc::PARAMS_BY_NAME, jsonrpc::JSON_ARRAY,  NULL), &AbstractEthStubServer::proceduresI);
             this->bindAndAddMethod(new jsonrpc::Procedure("secretToAddress", jsonrpc::PARAMS_BY_NAME, jsonrpc::JSON_STRING, "a",jsonrpc::JSON_STRING, NULL), &AbstractEthStubServer::secretToAddressI);
-            this->bindAndAddMethod(new jsonrpc::Procedure("sim_call", jsonrpc::PARAMS_BY_NAME, jsonrpc::JSON_STRING, "aDest",jsonrpc::JSON_STRING,"aOrigin",jsonrpc::JSON_STRING,"aSend",jsonrpc::JSON_STRING,"bData",jsonrpc::JSON_STRING,"xGas",jsonrpc::JSON_STRING,"xGasPrice",jsonrpc::JSON_STRING,"xValue",jsonrpc::JSON_STRING, NULL), &AbstractEthStubServer::sim_callI);
+            this->bindAndAddMethod(new jsonrpc::Procedure("simCall", jsonrpc::PARAMS_BY_NAME, jsonrpc::JSON_STRING, "aDest",jsonrpc::JSON_STRING,"aOrigin",jsonrpc::JSON_STRING,"aSend",jsonrpc::JSON_STRING,"bData",jsonrpc::JSON_STRING,"xGas",jsonrpc::JSON_STRING,"xGasPrice",jsonrpc::JSON_STRING,"xValue",jsonrpc::JSON_STRING, NULL), &AbstractEthStubServer::simCallI);
             this->bindAndAddMethod(new jsonrpc::Procedure("storageAt", jsonrpc::PARAMS_BY_NAME, jsonrpc::JSON_STRING, "a",jsonrpc::JSON_STRING,"x",jsonrpc::JSON_STRING, NULL), &AbstractEthStubServer::storageAtI);
             this->bindAndAddMethod(new jsonrpc::Procedure("transact", jsonrpc::PARAMS_BY_NAME, jsonrpc::JSON_OBJECT, "aDest",jsonrpc::JSON_STRING,"bData",jsonrpc::JSON_STRING,"sec",jsonrpc::JSON_STRING,"xGas",jsonrpc::JSON_STRING,"xGasPrice",jsonrpc::JSON_STRING,"xValue",jsonrpc::JSON_STRING, NULL), &AbstractEthStubServer::transactI);
             this->bindAndAddMethod(new jsonrpc::Procedure("txCountAt", jsonrpc::PARAMS_BY_NAME, jsonrpc::JSON_STRING, "a",jsonrpc::JSON_STRING, NULL), &AbstractEthStubServer::txCountAtI);
@@ -116,9 +116,9 @@ class AbstractEthStubServer : public jsonrpc::AbstractServer<AbstractEthStubServ
             response = this->secretToAddress(request["a"].asString());
         }
 
-        inline virtual void sim_callI(const Json::Value& request, Json::Value& response) 
+        inline virtual void simCallI(const Json::Value& request, Json::Value& response) 
         {
-            response = this->sim_call(request["aDest"].asString(), request["aOrigin"].asString(), request["aSend"].asString(), request["bData"].asString(), request["xGas"].asString(), request["xGasPrice"].asString(), request["xValue"].asString());
+            response = this->simCall(request["aDest"].asString(), request["aOrigin"].asString(), request["aSend"].asString(), request["bData"].asString(), request["xGas"].asString(), request["xGasPrice"].asString(), request["xValue"].asString());
         }
 
         inline virtual void storageAtI(const Json::Value& request, Json::Value& response) 
@@ -153,7 +153,7 @@ class AbstractEthStubServer : public jsonrpc::AbstractServer<AbstractEthStubServ
         virtual int peerCount() = 0;
         virtual Json::Value procedures() = 0;
         virtual std::string secretToAddress(const std::string& a) = 0;
-        virtual std::string sim_call(const std::string& aDest, const std::string& aOrigin, const std::string& aSend, const std::string& bData, const std::string& xGas, const std::string& xGasPrice, const std::string& xValue) = 0;
+        virtual std::string simCall(const std::string& aDest, const std::string& aOrigin, const std::string& aSend, const std::string& bData, const std::string& xGas, const std::string& xGasPrice, const std::string& xValue) = 0;
         virtual std::string storageAt(const std::string& a, const std::string& x) = 0;
         virtual Json::Value transact(const std::string& aDest, const std::string& bData, const std::string& sec, const std::string& xGas, const std::string& xGasPrice, const std::string& xValue) = 0;
         virtual std::string txCountAt(const std::string& a) = 0;
